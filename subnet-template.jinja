@@ -1,0 +1,14 @@
+{% set ipranges = properties["ipRanges"] %}
+{% set numip = ipranges|length %}
+resources:
+-   name: {{ env["name"] }}
+    type: compute.v1.subnetwork
+    properties:
+            ipCidrRange: {{ properties["ipCidrRange"]}}
+            network: {{ properties["network"]}}
+            region: {{ properties["region"]}}
+            secondaryIpRanges:
+            {% for i in range(numip) %}
+                -  rangeName: "namerange{{ i }}services"
+                   ipCidrRange: {{ ipranges[ i ]}}
+            {% endfor %}

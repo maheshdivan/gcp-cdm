@@ -1,0 +1,14 @@
+imports:
+- path: subnet-template.jinja
+resources:
+- name: test-vpc-3
+  type: compute.v1.network
+  properties:
+    autoCreateSubnetworks: false
+- name: test-vpc-3-subnet
+  type: subnet-template.jinja
+  properties:
+    ipCidrRange: 10.20.0.0/23
+    network: $(ref.test-vpc-3.selfLink)
+    region: us-west2
+    ipRanges: ['10.111.0.0/21','10.101.0.0/19','10.111.8.0/21','10.101.32.0/19']
